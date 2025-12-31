@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Melloriee – Wine-Red Slow-Fall</title>
+  <style>
+    html,body{margin:0;height:100%;overflow:hidden;background:#2c0206;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
+    #canvas{position:fixed;inset:0;z-index:1}
+    #letter{
+      position:absolute;inset:0;margin:auto;
+      width:90%;max-width:680px;height:fit-content;
+      color:#f5e6e8;font-size:1.05em;line-height:1.68;
+      padding:3.2em 3.8em 3.8em 3.8em;
+      background:rgba(78,11,20,.55);
+      border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.45);
+      z-index:2;pointer-events:none; /* text stays readable, scene behind */
+    }
+    #letter p{margin:0 0 1.1em}
+    #letter .sign{text-align:right;font-style:italic;margin-top:2.2em}
+    audio{position:fixed;bottom:12px;right:12px;z-index:3;width:220px}
+  </style>
+</head>
+<body>
+  <!-- Sweet background tune -->
+  <audio id="bgm" controls loop autoplay>
+    <source src="https://cdn.pixabay.com/download/audio/2022/02/21/audio_2c04cfb44e.mp3?filename=sweet-chill-lofi-110856.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Three.js canvas -->
+  <canvas id="canvas"></canvas>
+
+  <!-- Letter content -->
+  <div id="letter">
+    <p>Helloo Melloriee,</p>
+    <p>I just wanted to say thank you soo much for being an awesome friend. I know we’ve been friendss for a while now, and I’m sooo grateful for the time you decided to be friends with me. You’re literally the only woman who’s treated me like a real friend, and I appreciate that a lot.</p>
+    <p>I was thinking back to all the stuff we’ve done together, andd there’s just soo muchh to be thankful for. Like, remember those Roblox days? We had soo much fun playing those two-player obbies, especially Spider Obby WAHAHAHHA. And alsoo the jokes are the best! Thanks for making mee laugh, for being there, and for being you.</p>
+    <p>Christmass was way more funn with you, and I’m so glad we got to celebrate together. From decorating trees to exchanging gifts (though we didn’t exchange gifts cuzz we didn’t draw each other or our names), alsoo those crazy food trips. Can’t wait for this new year withh everyonee—especially youu.</p>
+    <p><strong>HAPPY NEW YEAR!</strong></p>
+    <p class="sign">Your dear friend,<br>Clyde</p>
+  </div>
+
+  <!-- Three files you already have -->
+  <script src="three.js"></script>
+  <script src="three.min.js"></script>
+  <script src="OrbitControls.js"></script>
+
+  <script>
+    /* ---------- Basic Three.js setup ---------- */
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, .1, 1000);
+    camera.position.set(0,0,45);
+
+    const renderer = new THREE.WebGLRenderer({canvas:document.getElementById('canvas'),alpha:true,antialias:true});
+    renderer.setSize(innerWidth,innerHeight);
+    renderer.setPixelRatio(devicePixelRatio);
+
+    /* ---------- Gentle wine-red fog & lighting ---------- */
+    scene.fog = new THREE.FogExp2(0x4e0b14,.018);
+    const amb = new THREE.AmbientLight(0xffd8e4,.75);
+    scene.add(amb);
+    const dir = new THREE.DirectionalLight(0xffe0ea,.9);
+    dir.position.set(5,10,7);
+    scene.add(dir);
+
+    /* ---------- Slower falling “flakes” (60 % slower) ---------- */
+    const flakeCount = 600;
+    const geo = new THREE.BufferGeometry();
+    const pos = new Float32Array(flakeCount*3);
+    const vel = new Float32Array(flakeCount); // individual fall speed
+    for(let i=0;i<flakeCount;i++){
+      pos[i*3]   = (Math.random()-.5)*160;
+      pos[i*3+1] = Math.random()*120;
+      pos[i*3+2] = (Math.random()-.5)*120;
+      vel[i]     = .015 + Math.random()*.025; // slowed down
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+    const mat = new THREE.PointsMaterial({
+      color:0xffd8e4,size:1.15,transparent:true,opacity:.78,blending:THREE.AdditiveBlending
+    });
+    const flakes = new THREE.Points(geo,mat);
+    scene.add(flakes);
+
+    /* ---------- Gentle camera drift ---------- */
+    let time=0;
+    function animate(){
+      requestAnimationFrame(animate);
+      time+=.0008;
+      camera.position.x = Math.sin(time)*4;
+      camera.position.y = Math.cos(time*.7)*2;
+      camera.lookAt(scene.position);
+
+      /* slow fall update */
+      const posAttr = flakes.geometry.attributes.position.array;
+      for(let i=0;i<flakeCount;i++){
+        posAttr[i*3+1]-=vel[i];
+        if(posAttr[i*3+1]<-60) posAttr[i*3+1]=60;
+      }
+      flakes.geometry.attributes.position.needsUpdate=true;
+
+      renderer.render(scene,camera);
+    }
+    animate();
+
+    /* ---------- keep canvas sized to window ---------- */
+    addEventListener('resize',()=>{
+      camera.aspect=innerWidth/innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth,innerHeight);
+    });
+  </script>
+</body>
+  </html>
+  
