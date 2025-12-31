@@ -183,4 +183,13 @@ body {
   .letter { padding: 25px 20px; }
   .tulip-button, .music-button { font-size: .85rem; padding: 8px 14px; }
     }
-  
+
+.letter-content p,
+.highlight-box,
+.new-year-section p,
+.date,
+.signature-name,
+.title {
+  color: #000;
+}
+
