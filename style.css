@@ -9,7 +9,7 @@ body {
   background: linear-gradient(135deg, #722f37 0%, #8b3a42 100%);
   min-height: 100vh;
   overflow-x: hidden;
-  color: #fff;
+  color: #000;
 }
 
 /* ---------- effects ---------- */
@@ -100,14 +100,14 @@ body {
 }
 .date {
   font-size: .9em;
-  color: #888;
+  color: #000;
 }
 
 .letter-content p {
   margin: 16px 0;
   line-height: 1.7;
   text-align: justify;
-  opacity: 0;
+  opacity: 5;
   animation: fadeIn 1s ease forwards;
 }
 @keyframes fadeIn { to { opacity: 1; } }
