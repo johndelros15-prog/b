@@ -82,12 +82,12 @@ setInterval(() => {
 
 /* ---------- quote pop (longer) ---------- */
 const romanticQuotes = [
-  "You are my today and all of my tomorrows. 💕",
-  "In you, I've found the love of my life and my closest friend. 🌷",
+  "Meeting you was one of the best things",
+  "life is better with u in it",
   "Every moment with you is a beautiful dream come true. ✨",
-  "Your smile is the sunshine that brightens my darkest days. ☀️",
-  "Loving you is like breathing - so effortless and essential. 💖",
-  "Tulips are like your love - delicate, beautiful, and everlasting. 🌷"
+  "Your presence is the sunshine that brightens my darkest days. ☀️",
+  "When I play with you, I find a safe place couldn't before",
+  "Christmas was better with u"
 ];
 setInterval(() => {
   const q = romanticQuotes[Math.floor(Math.random() * romanticQuotes.length)];
