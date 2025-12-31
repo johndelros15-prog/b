@@ -1,5 +1,5 @@
 /* ---------- auto-play on scroll ---------- */
-let musicStarted = false;
+let musicStarted = true;
 document.addEventListener('scroll', () => {
   if (!musicStarted) {
     const audio = document.getElementById('bgMusic');
@@ -24,7 +24,7 @@ function showTulip() {
 }
 
 /* ---------- music button ---------- */
-let musicPlaying = false;
+let musicPlaying = true;
 function toggleMusic() {
   const audio = document.getElementById('bgMusic');
   const btn = document.querySelector('.music-button');
